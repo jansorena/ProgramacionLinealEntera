@@ -1,0 +1,142 @@
+\documentclass[11pt,addpoints]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\parindent = 0cm % sangria distancia
+%%
+\usepackage{amsmath}
+\usepackage{amssymb,amsfonts,latexsym,cancel}
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+\usepackage{multirow}
+%%
+\usepackage[table,xcdraw]{xcolor}
+\usepackage[lmargin=2cm,rmargin=2cm,top=2cm,bottom=2.5cm]{geometry}
+\usepackage{xspace}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[L]{FACULTAD DE INGENIERÍA\\DEPTO DE INGENIERÍA INDUSTRIAL \\ OPTIMIZACION I (546351)}
+\fancyhead[R]{\includegraphics[scale=0.13]{escudoudec}}
+\fancyfoot{\thepage}
+\fancyfoot[R]{Semestre 2023-2}
+\fancyfoot[L]{RM/MBZ/MBS}
+\renewcommand{\headrulewidth}{0.9pt}
+\renewcommand{\footrulewidth}{0.5pt}
+\vspace*{0.1cm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\begin{center}
+
+{\Large \bfseries Tarea Computacional 1: Modelación matemática y Solver de $\text{Excel}^\circledR$}\\[0.5cm]	%%%
+%\HRule \\[0.2cm] 
+\begin{minipage}{1.0\textwidth} 
+\begin{center}	
+\textbf{Integrantes}\\%%%
+\textsc{Barrientos Zagal Matías Sebastián - 2000667711\\
+Barrientos Zagal Matías Sebastián - 2000667711
+\\[0.4cm]
+}
+
+\end{center}
+
+\end{minipage}\\[0.2cm]
+\end{center}
+
+%%%%%%%%%%%%%% COMIENZAN LOS EJERCICIOS %%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Situación Propuesta}
+Escriban el problema que seleccionaron con sus respectivos supuestos y datos necesarios para plantear el modelo matemático.
+\section{Variables de decisión}
+En este modelo, se consideraron tres variables de decisión que son binarias y se definen a continuación:\\
+\begin{equation*} 
+	x_{ij} =\left\lbrace 
+    \begin{array}{ll} 1\ \textup{ \ ,\ }  \text{si el arco}\ (i,j) \ \text{es parte de la ruta} & \\ 0 \textup{\ , \ } \text{e.o.c} \end{array} \right.
+    \end{equation*}\\
+    \begin{equation*} 
+	y_{ik} =\left\lbrace 
+    \begin{array}{ll} 1\ \textup{ \ ,\ }  \text{si la instalación}\ i \ \text{cubre al cliente } k \ & \\ 0 \textup{\ , \ } \text{e.o.c} \end{array} \right.
+    \end{equation*}\\
+    \begin{equation*} 
+	z_{i} =\left\lbrace 
+    \begin{array}{ll} 1\ \textup{ \ ,\ }  \text{si la instalación}\ i \ \text{es parte de la ruta} & \\ 0 \textup{\ , \ } \text{e.o.c} \end{array} \right.\end{equation*}\\
+    \begin{equation*}
+    g_{ij} = \text{flujo que pasa por el arco (i,j)}    
+    \end{equation*}
+$\forall i \in N=0,...,n$, $\forall j \in N=0,...,n$ y $\forall k \in C=1,...,m$. Con $n$ el número de instalaciones, donde el depósito es $i=0$ y donde $m$ es el número de clientes respectivos. 
+\section{Parámetros del Modelo}
+Los parámetros del modelo son:
+\begin{align*}
+    N &= \text{Conjunto de nodos}\\
+    A &= \text{Conjunto de arcos}\\
+    0 &= \text{nodo de origen y término (depot)}\\
+    t_{ij} &= \text{Distancia entre}\ i \ \text{hasta}\ j\\
+    P &= \text{Total beneficio a recolectar}\\
+    M &= \text{Número real muy grande}\\
+I_c &= \text{Conjunto de instalaciones capaces de cubrir a los clientes}\ c \in C\\
+    p_i &= \text{beneficio de cubrir al cliente }i
+\end{align*}
+\newpage %No borrar!!
+\vspace*{0.3cm} %No borrar!!
+\section{Función objetivo}
+Explicar brevemente la función objetivo.
+\begin{gather*}
+    \text{ Minimizar}\ \ Z = \sum_{i=0}^{n} \sum_{j=1}^{n} t_{ij}x_{ij} - \sum_{(i,j)\in A : i \in I_c } y_{ij} - \sum_{i \in N} z_i\\
+\end{gather*}
+
+\section{Restricciones}
+Explicar brevemente cada restricción.
+\begin{gather*}
+    \sum_{j \in N} x_{ij}=1 \ \ \ \ (\forall i \in N\setminus\{0\}) \ \ \ \ (1)\\
+    \sum_{i \in N} x_{ij} = 1 \ \ \ \ (\forall j \in N\setminus\{0\}) \ \ \ \ (2) \\
+     \sum_{j \in N} x_{0j} = 1 \ \ \ \ \ \ \ \  \ \ \ \   \ \ \ \  \ \ \ \  \ \ \ \ \ \ \ (3) \\
+    \sum_{i \in N} x_{i0} = 1 \ \ \ \ \ \ \ \  \ \ \ \   \ \ \ \  \ \ \ \  \ \ \ \ \ \ \ \ (4) \\
+     \sum_{(0,j) \in A} g_{0j} = \sum_{(i,j)\in A\setminus{0}:i \in I_{c}} y_{ij} + \sum_{i \in N: i \neq 0} z_i \ \ \ \ \ \ (5) \\
+     \sum_{(i,j) \in A} g_{ij} - \sum_{(i,j) \in A} g_{ji} = z_i + \sum_{i \in I_c :(i,j)\in A} y_{ij} \ \ \ \  (\forall i \in N: i\neq0, j\neq0) \ \ \ \ \ (6) \\
+     g_{ij} \leq Mx_{ij} \ \ \ \ (\forall (i,j) \in A: i \notin I_c) \ \ \ \ \ \ \ (7)\\
+     g_{ij} \leq Mx_{ij} + z_{ij} \ \ \ \ (\forall (i,j) \in A: i \in I_c) \ \ \ \ \ (8)\\
+     g_{ij} \leq Px_{ij} \ \ \ \ (\forall (0,j) \in A) \ \ \ \ \ \ \ \ \ (9)\\
+    \text{\ \ \ \ } x_{ij} \in \{0,1\} \ , \ y_{ij} \in \{0,1\} \ , \ z_i \in \{0,1\} \ , \ g_{ij} \geq 0 \ \ \ \ \ (10)
+\end{gather*}
+
+\newpage %No borrar!!
+\vspace*{0.3cm} %No borrar!!
+\section{Modelo matemático}
+El modelo de programación entera asociado a este problema, está dado por:\\
+\begin{gather*}
+    \text{ Minimizar}\ \ Z = \sum_{i=0}^{n} \sum_{j=1}^{n} t_{ij}x_{ij} - \sum_{(i,j)\in A : i \in I_c } y_{ij} - \sum_{i \in N} z_i\\
+    \text{ sujeto a:}\\
+     \sum_{j \in N} x_{ij}=1 \ \ \ \ (\forall i \in N\setminus\{0\}) \ \ \ \ (1)\\
+    \sum_{i \in N} x_{ij} = 1 \ \ \ \ (\forall j \in N\setminus\{0\}) \ \ \ \ (2) \\
+     \sum_{j \in N} x_{0j} = 1 \ \ \ \ \ \ \ \  \ \ \ \   \ \ \ \  \ \ \ \  \ \ \ \ \ \ \ (3) \\
+    \sum_{i \in N} x_{i0} = 1 \ \ \ \ \ \ \ \  \ \ \ \   \ \ \ \  \ \ \ \  \ \ \ \ \ \ \ \ (4) \\
+     \sum_{(0,j) \in A} g_{0j} = \sum_{(i,j)\in A\setminus{0}:i \in I_{c}} y_{ij} + \sum_{i \in N: i \neq 0} z_i \ \ \ \ \ \ (5) \\
+     \sum_{(i,j) \in A} g_{ij} - \sum_{(i,j) \in A} g_{ji} = z_i + \sum_{i \in I_c :(i,j)\in A} y_{ij} \ \ \ \  (\forall i \in N: i\neq0, j\neq0) \ \ \ \ \ (6) \\
+     g_{ij} \leq Mx_{ij} \ \ \ \ (\forall (i,j) \in A: i \notin I_c) \ \ \ \ \ \ \ (7)\\
+     g_{ij} \leq Mx_{ij} + z_{ij} \ \ \ \ (\forall (i,j) \in A: i \in I_c) \ \ \ \ \ (8)\\
+     g_{ij} \leq Px_{ij} \ \ \ \ (\forall (0,j) \in A) \ \ \ \ \ \ \ \ \ (9)\\
+    \text{\ \ \ \ } x_{ij} \in \{0,1\} \ , \ y_{ij} \in \{0,1\} \ , \ z_i \in \{0,1\} \ , \ g_{ij} \geq 0 \ \ \ \ \ (10)
+\end{gather*}
+% \newpage  %%En caso de que necesiten otra página.
+% \vspace*{0.3cm} %%No borrar!!
+\section{Resultados}
+Aquí presenten el informe de respuestas, que se obtiene con el Solver e identifiquen el valor de las variables de decisión y de la función objetivo. Analizar los demás informes haciéndose algunas preguntas como las del laboratorio 1.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Variable de decisión}                                    & \multicolumn{1}{l|}{\textbf{Valor (unidad de medida}} \\ \hline
+$x_{11}$              & 5.54                                     \\ \hline
+$x_{12}$              & 10.12                                     \\ \hline
+$x_{21}$              & 1.2                                     \\ \hline
+$x_{22}$              & 1.2                                     \\ \hline
+$y_{ik}$ & 4                                     \\ \hline
+$z_i$                                   & 5                                     \\ \hline
+
+\end{tabular}
+\caption{Solución óptima del problema propuesto.}
+\label{tab:my-table}
+\end{table}
+\end{document}

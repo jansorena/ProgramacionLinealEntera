@@ -1,0 +1,76 @@
+set INDIVIDUOS :=
+    Chewbacca Bunzi_Buddy Neo Anonymous Nicanor_Parra Morfeo Hamlet Robocop El_Zorro Mark_Zuckerberg Alan_Turing Elon_Musk;
+
+param hi :=
+    Chewbacca "Atacante"
+    Bunzi_Buddy "Hacker"
+    Neo "Realidad_Virtual"
+    Anonymous "Hacker"
+    Nicanor_Parra "Poeta_de_Twitter"
+    Morfeo "Realidad_Virtual"
+    Hamlet "Poeta_de_Twitter"
+    Robocop "Realidad_Virtual"
+    El_Zorro "Atacante"
+    Mark_Zuckerberg "Programador"
+    Alan_Turing "Programador"
+    Elon_Musk "Programador";
+
+param hi2 :=
+	Chewbacca ""
+	Bunzi_Buddy "Virus"
+	Neo ""
+	Anonymous "Programador"
+	Nicanor_Parra ""
+	Morfeo ""
+	Hamlet ""
+	Robocop "Atacante"
+	El_Zorro ""
+	Mark_Zuckerberg ""
+	Alan_Turing ""
+	Elon_Musk "Poeta_de_Twitter";
+
+param di :=
+    Chewbacca 82
+    Bunzi_Buddy 25
+    Neo 80
+    Anonymous 70
+    Nicanor_Parra 15
+    Morfeo 48
+    Hamlet 40
+    Robocop 86
+    El_Zorro 75
+    Mark_Zuckerberg 37
+    Alan_Turing 40
+    Elon_Musk 20;
+
+param qi :=
+    Chewbacca 24
+    Bunzi_Buddy 75
+    Neo 89
+    Anonymous 85
+    Nicanor_Parra 90
+    Morfeo 82
+    Hamlet 90
+    Robocop 65
+    El_Zorro 80
+    Mark_Zuckerberg 91
+    Alan_Turing 100
+    Elon_Musk 87;
+
+param ri :=
+    Chewbacca 43
+    Bunzi_Buddy 74
+    Neo 89
+    Anonymous 78
+    Nicanor_Parra 65
+    Morfeo 82
+    Hamlet 96
+    Robocop 38
+    El_Zorro 71
+    Mark_Zuckerberg 79
+    Alan_Turing 93
+    Elon_Musk 88;
+
+param qprom := 50;
+
+param rmin := 500;
